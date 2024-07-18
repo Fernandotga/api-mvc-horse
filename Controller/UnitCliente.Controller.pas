@@ -43,8 +43,6 @@ begin
   end else
     Res.Send<TJSONObject>(TJSONObject.Create.AddPair('message','Cliente não encontrado'))
        .Status(THTTPStatus.NotFound);
-
-
 end;
 
 class procedure TClienteController.GetAll(Req: THorseRequest;
