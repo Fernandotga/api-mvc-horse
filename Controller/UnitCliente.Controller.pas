@@ -35,9 +35,16 @@ begin
     raise Exception.Create('id não encontrado');
   id := Req.Params.Items['id'].ToInteger();
   Cliente := TclienteModel.find(id);
-  Cliente.Delete;
-  Res.Send<TJSONObject>(TJSONObject.Create.AddPair('message',
-                        'Cliente deletado com sucesso')).Status(THTTPStatus.OK);
+  if Assigned(Cliente) then
+  begin
+    Cliente.Delete;
+    Res.Send<TJSONObject>(TJSONObject.Create.AddPair('message','Cliente deletado com sucesso'))
+       .Status(THTTPStatus.OK);
+  end else
+    Res.Send<TJSONObject>(TJSONObject.Create.AddPair('message','Cliente não encontrado'))
+       .Status(THTTPStatus.NotFound);
+
+
 end;
 
 class procedure TClienteController.GetAll(Req: THorseRequest;
@@ -120,8 +127,32 @@ end;
 
 class procedure TClienteController.Put(Req: THorseRequest; Res: THorseResponse;
   Next: TProc);
+var
+  ojson: TJSONObject;
+  Cliente: TclienteModel;
+  id : Integer;
 begin
+  if Req.Params.Count = 0 then
+    raise Exception.Create('id não encontrado');
+  id := Req.Params.Items['id'].ToInteger();
+  ojson := Req.Body<TJSONObject>;
+  Cliente := TClienteModel.find(id);
 
+  if Assigned(Cliente) then
+  begin
+    Cliente.codigo      := id;
+    Cliente.nome        := ojson.GetValue<string>('nome');
+    Cliente.endereco    := ojson.GetValue<string>('endereco');
+    Cliente.bairro      := ojson.GetValue<string>('bairro');
+    Cliente.complemento := ojson.GetValue<string>('complemento');
+    Cliente.cidade      := ojson.GetValue<string>('cidade');
+    Cliente.uf          := ojson.GetValue<string>('uf');
+    Cliente.Update;
+
+    Res.Send<TJSONObject>(oJSon).Status(THTTPStatus.OK);
+  end else
+    Res.Send<TJSONObject>(TJSONObject.Create.AddPair('message',
+                        'Cliente não encontrado')).Status(THTTPStatus.NotFound);
 end;
 
 class procedure TClienteController.Registry;
