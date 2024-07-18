@@ -1,0 +1,30 @@
+{
+	"hash": "d41d8cd98f00b204e9800998ecf8427e",
+	"updated": "2024-07-17T13:06:57.4479041-03:00",
+	"installedModules": {
+		"github.com/hashload/horse": {
+			"name": "horse",
+			"version": "3.1.6",
+			"hash": "ace6c30e89d464de421e1aa120c73a58",
+			"artifacts": {},
+			"failed": false,
+			"changed": false
+		},
+		"github.com/hashload/jhonson": {
+			"name": "jhonson",
+			"version": "1.1.9",
+			"hash": "ab9663f2e7c0ab2086e560c9c66ce092",
+			"artifacts": {},
+			"failed": false,
+			"changed": false
+		},
+		"https://github.com/cachopaweb/factory-connections": {
+			"name": "factory-connections",
+			"version": "v1.0.3",
+			"hash": "dd2506e1ff0fd0b4e07f0347972f12f6",
+			"artifacts": {},
+			"failed": false,
+			"changed": false
+		}
+	}
+}
